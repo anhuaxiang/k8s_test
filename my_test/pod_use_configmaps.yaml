@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-use-configmaps
+spec:
+  containers:
+    - name: pod-use-configmaps
+      image: busybox
+      command: ["/bin/sh", "-c", "env | grep APP"]
+      env:
+        - name: APP_LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: app-vars
+              key: apploglevel
+        - name: APP_DATA_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: app-vars
+              key: appdatadir
+  restartPolicy: Never
+
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-test-pod-env
+spec:
+  containers:
+    - name: cm-test
+      image: busybox
+      command: ["/bin/sh","-c","env"]
+      envFrom:
+      - configMapRef:
+          name: app-vars   # 根据 cm-appvars 中的 key=value 自动生成环境变量
+  restartPolicy: Never

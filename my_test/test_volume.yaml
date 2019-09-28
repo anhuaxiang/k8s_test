@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-demo-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-demo-1
+    matchExpressions:
+      - {key: tier, operator: In, values: [grontend]}
+  template:
+    metadata:
+      labels:
+        app: app-demo-1
+        tier: grontend
+    spec:
+      volumes:
+        - name: datavol
+          emptyDir: {}
+      containers:
+        - name: tomcat-demo-1
+          image: tomcat
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /mydata-data
+              name: datavol
+
+
+
+---
+volumes:
+  - name: datavol
+    hostPath:
+      path: "/home/yan/workspace"
+
+---
+volumes:
+  - name: nfs
+    nfs:
+      server: nfs-server
+      path: "/"

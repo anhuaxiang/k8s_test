@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+  labels:
+    app: httpd-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: httpd-deployment
+  template:
+    metadata:
+      labels:
+        app: httpd-deployment
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: VERSION
+              value: "V1"
+
+# kubectl get deployment
+# kubectl describe deployment httpd-deployment
+# kubectl get pod -owide
+# kubectl edit -f Deployment.yaml
+# kubectl apply -f Deployment.yaml
+# kubectl scale deployment/httpd-deployment --replicas=1
+# kubectl delete deployment httpd-deployment

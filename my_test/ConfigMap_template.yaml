@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-vars
+data:
+  apploglevel: info
+  appdatadir: /var/data
+
+
+# kubectl get configmaps app-vars -o yaml
+# kubectl create configmap NAME --from-file=[key=]source --from-file=[key=]source
+# kubectl create configmap NAME --from-file=config-files-dir
+# kubectl create configmap NAME --from-literal=keyl=valuel --from-literal=key2=value2

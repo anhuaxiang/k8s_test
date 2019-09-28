@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector-test
+  labels:
+    app: nodeselector-test
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      imagePullPolicy: IfNotPresent
+  nodeSelector:
+    id: master
+
+
+# kubectl label nodes node3 id=master  通常node-restriction.kubernetes.io标签前缀 例如: example.com.node-restriction.kubernetes.io/fips=true

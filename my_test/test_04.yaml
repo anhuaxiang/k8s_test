@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      tier: grontend
+    matchExpression:
+      - {key: tier, operator: In, values: [fronted]}
+  template:
+    ...

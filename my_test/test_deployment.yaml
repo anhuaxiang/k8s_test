@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-demo
+    matchExpressions:
+      - {key: tier, operator: In, values: [grontend]}
+  template:
+    metadata:
+      labels:
+        app: app-demo
+        tier: grontend
+    spec:
+      containers:
+        - name: tomcat-demo
+          image: tomcat
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
